@@ -2,7 +2,9 @@ package api
 
 import (
 	"context"
+	"math/rand"
 	"net/url"
+	"strings"
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/netlify/git-gateway/conf"
@@ -106,7 +108,10 @@ func getAccessToken(ctx context.Context) string {
 	if obj == nil {
 		return ""
 	}
-	return obj.(string)
+
+	tokens := strings.Split(obj.(string), ",")
+
+	return tokens[rand.Intn(len(tokens))]
 }
 
 func getInstanceID(ctx context.Context) string {
